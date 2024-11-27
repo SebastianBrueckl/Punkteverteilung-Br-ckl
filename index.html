@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benutzerauswahl</title>
+    <script>
+        function validatePassword() {
+            const selectedUser = document.querySelector('input[name="user"]:checked');
+            const passwordInput = document.getElementById('password').value;
+
+            if (!selectedUser) {
+                alert('Bitte Benutzer auswählen!');
+                return;
+            }
+
+            const user = selectedUser.value;
+            const passwords = {
+                Sebastian: 'I w m M e M k!7',
+                Valentina: 'pass2',
+                Nelly: 'Nh352004',
+                Johann: 'pass4'
+            };
+
+            if (passwordInput === passwords[user]) {
+                window.location.href = `${user}.html`;
+            } else {
+                alert('Falsches Passwort!');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Benutzer auswählen</h1>
+
+    <form onsubmit="event.preventDefault(); validatePassword();">
+        <label><input type="radio" name="user" value="Sebastian"> Sebastian</label>
+        <label><input type="radio" name="user" value="Valentina"> Valentina</label>
+        <label><input type="radio" name="user" value="Nelly"> Nelly</label>
+        <label><input type="radio" name="user" value="Johann"> Johann</label>
+
+        <div>
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" placeholder="Passwort eingeben">
+        </div>
+
+        <button type="submit">Weiter</button>
+    </form>
+</body>
+</html>
