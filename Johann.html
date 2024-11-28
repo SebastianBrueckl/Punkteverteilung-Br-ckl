@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Willkommen Johann!</h1>
-    <div style="display: flex; align-items: flex-end; height: 200px;">
+    <div style="display: flex; align-items: flex-end; gap: 20px; height: 300px; border: 1px solid #ccc; padding: 10px;">
         <div>
             <div id="SebastianPoints" style="width: 50px; background: blue; height: 0;"></div>
             <p id="SebastianScore">0 Punkte</p>
@@ -19,10 +19,41 @@
         </div>
     </div>
     <div>
-        <button onclick="addPoints('Sebastian', 10)">+10 Punkte an Sebastian</button>
-        <button onclick="subtractPoints('Sebastian', 5)">-5 Punkte an Sebastian</button>
-        <button onclick="addPoints('Valentina', 10)">+10 Punkte an Valentina</button>
-        <button onclick="subtractPoints('Valentina', 5)">-5 Punkte an Valentina</button>
+        <h2>Punkte an Sebastian:</h2>
+        <button onclick="addPoints('Sebastian', 1)">+1</button>
+        <button onclick="addPoints('Sebastian', 2)">+2</button>
+        <button onclick="addPoints('Sebastian', 4)">+4</button>
+        <button onclick="addPoints('Sebastian', 8)">+8</button>
+        <button onclick="addPoints('Sebastian', 16)">+16</button>
+        <button onclick="addPoints('Sebastian', 32)">+32</button>
+        <button onclick="addPoints('Sebastian', 64)">+64</button>
+        <button onclick="addPoints('Sebastian', 128)">+128</button>
+        <button onclick="subtractPoints('Sebastian', 1)">-1</button>
+        <button onclick="subtractPoints('Sebastian', 2)">-2</button>
+        <button onclick="subtractPoints('Sebastian', 4)">-4</button>
+        <button onclick="subtractPoints('Sebastian', 8)">-8</button>
+        <button onclick="subtractPoints('Sebastian', 16)">-16</button>
+        <button onclick="subtractPoints('Sebastian', 32)">-32</button>
+        <button onclick="subtractPoints('Sebastian', 64)">-64</button>
+        <button onclick="subtractPoints('Sebastian', 128)">-128</button>
+
+        <h2>Punkte an Valentina:</h2>
+        <button onclick="addPoints('Valentina', 1)">+1</button>
+        <button onclick="addPoints('Valentina', 2)">+2</button>
+        <button onclick="addPoints('Valentina', 4)">+4</button>
+        <button onclick="addPoints('Valentina', 8)">+8</button>
+        <button onclick="addPoints('Valentina', 16)">+16</button>
+        <button onclick="addPoints('Valentina', 32)">+32</button>
+        <button onclick="addPoints('Valentina', 64)">+64</button>
+        <button onclick="addPoints('Valentina', 128)">+128</button>
+        <button onclick="subtractPoints('Valentina', 1)">-1</button>
+        <button onclick="subtractPoints('Valentina', 2)">-2</button>
+        <button onclick="subtractPoints('Valentina', 4)">-4</button>
+        <button onclick="subtractPoints('Valentina', 8)">-8</button>
+        <button onclick="subtractPoints('Valentina', 16)">-16</button>
+        <button onclick="subtractPoints('Valentina', 32)">-32</button>
+        <button onclick="subtractPoints('Valentina', 64)">-64</button>
+        <button onclick="subtractPoints('Valentina', 128)">-128</button>
     </div>
     <a href="index.html">Zurück zur Auswahl</a>
 </body>
