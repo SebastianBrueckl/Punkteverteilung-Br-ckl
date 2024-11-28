@@ -10,15 +10,15 @@
             const passwordInput = document.getElementById('password').value;
 
             if (!selectedUser) {
-                alert('Bitte Benutzer auswählen!');
+                alert('Bitte wähle einen Benutzer aus.');
                 return;
             }
 
             const user = selectedUser.value;
             const passwords = {
-                Sebastian: 'I w m M e M k!7',
+                Sebastian: 'pass1',
                 Valentina: 'pass2',
-                Nelly: 'Nh352004',
+                Nelly: 'pass3',
                 Johann: 'pass4'
             };
 
@@ -34,10 +34,12 @@
     <h1>Benutzer auswählen</h1>
 
     <form onsubmit="event.preventDefault(); validatePassword();">
-        <label><input type="radio" name="user" value="Sebastian"> Sebastian</label>
-        <label><input type="radio" name="user" value="Valentina"> Valentina</label>
-        <label><input type="radio" name="user" value="Nelly"> Nelly</label>
-        <label><input type="radio" name="user" value="Johann"> Johann</label>
+        <div>
+            <label><input type="radio" name="user" value="Sebastian"> Sebastian</label>
+            <label><input type="radio" name="user" value="Valentina"> Valentina</label>
+            <label><input type="radio" name="user" value="Nelly"> Nelly</label>
+            <label><input type="radio" name="user" value="Johann"> Johann</label>
+        </div>
 
         <div>
             <label for="password">Passwort:</label>

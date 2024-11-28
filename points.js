@@ -1,22 +1,26 @@
-// Die Punktzahlen der Benutzer werden hier gespeichert
-let points = {
-    sebastian: 0,
-    valentina: 0
+// Punktestand für Benutzer
+const points = {
+    Sebastian: 0,
+    Valentina: 0
 };
 
-// Funktion, um Punkte hinzuzufügen
-function addPoints(user, pointsToAdd) {
-    points[user] += pointsToAdd;
-    updatePointsDisplay(user);
+// Punkte hinzufügen
+function addPoints(user, value) {
+    points[user] += value;
+    updateBars();
 }
 
-// Funktion, um Punkte zu subtrahieren (Minuspunkte)
-function subtractPoints(user, pointsToSubtract) {
-    points[user] += pointsToSubtract;  // Punkte werden negativ hinzugefügt (Minuspunkte)
-    updatePointsDisplay(user);
+// Punkte subtrahieren
+function subtractPoints(user, value) {
+    points[user] -= value;
+    updateBars();
 }
 
-// Funktion, um den Punktestand anzuzeigen
-function updatePointsDisplay(user) {
-    document.getElementById(user + 'Points').innerText = points[user];
+// Balken aktualisieren
+function updateBars() {
+    document.getElementById('SebastianPoints').style.height = points.Sebastian + 'px';
+    document.getElementById('ValentinaPoints').style.height = points.Valentina + 'px';
+
+    document.getElementById('SebastianScore').innerText = points.Sebastian + ' Punkte';
+    document.getElementById('ValentinaScore').innerText = points.Valentina + ' Punkte';
 }

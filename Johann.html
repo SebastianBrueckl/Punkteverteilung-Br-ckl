@@ -3,69 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nelly</title>
-    <script src="points.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <title>Johann</title>
+    <script src="points.js" defer></script>
 </head>
 <body>
-    <h1>Willkommen Nelly!</h1>
-
-    <h2>Punktestand</h2>
-    <div class="bar-container">
-        <!-- Balken für Sebastian -->
-        <div id="sebastianBar" class="bar">0 Punkte</div>
-        <!-- Balken für Valentina -->
-        <div id="valentinaBar" class="bar">0 Punkte</div>
+    <h1>Willkommen Johann!</h1>
+    <div style="display: flex; align-items: flex-end; height: 200px;">
+        <div>
+            <div id="SebastianPoints" style="width: 50px; background: blue; height: 0;"></div>
+            <p id="SebastianScore">0 Punkte</p>
+        </div>
+        <div>
+            <div id="ValentinaPoints" style="width: 50px; background: red; height: 0;"></div>
+            <p id="ValentinaScore">0 Punkte</p>
+        </div>
     </div>
-
     <div>
-        <h3>Punkte an Sebastian vergeben:</h3>
-        <!-- Positive Punkte -->
-        <button onclick="updatePoints('Sebastian', 1)">+1</button>
-        <button onclick="updatePoints('Sebastian', 2)">+2</button>
-        <button onclick="updatePoints('Sebastian', 4)">+4</button>
-        <button onclick="updatePoints('Sebastian', 8)">+8</button>
-        <button onclick="updatePoints('Sebastian', 16)">+16</button>
-        <button onclick="updatePoints('Sebastian', 32)">+32</button>
-        <button onclick="updatePoints('Sebastian', 64)">+64</button>
-        <button onclick="updatePoints('Sebastian', 128)">+128</button>
-
-        <!-- Minuspunkte -->
-        <h3>Minuspunkte an Sebastian vergeben:</h3>
-        <button onclick="updatePoints('Sebastian', -1)">-1</button>
-        <button onclick="updatePoints('Sebastian', -2)">-2</button>
-        <button onclick="updatePoints('Sebastian', -4)">-4</button>
-        <button onclick="updatePoints('Sebastian', -8)">-8</button>
-        <button onclick="updatePoints('Sebastian', -16)">-16</button>
-        <button onclick="updatePoints('Sebastian', -32)">-32</button>
-        <button onclick="updatePoints('Sebastian', -64)">-64</button>
-        <button onclick="updatePoints('Sebastian', -128)">-128</button>
+        <button onclick="addPoints('Sebastian', 10)">+10 Punkte an Sebastian</button>
+        <button onclick="subtractPoints('Sebastian', 5)">-5 Punkte an Sebastian</button>
+        <button onclick="addPoints('Valentina', 10)">+10 Punkte an Valentina</button>
+        <button onclick="subtractPoints('Valentina', 5)">-5 Punkte an Valentina</button>
     </div>
-
-    <div>
-        <h3>Punkte an Valentina vergeben:</h3>
-        <!-- Positive Punkte -->
-        <button onclick="updatePoints('Valentina', 1)">+1</button>
-        <button onclick="updatePoints('Valentina', 2)">+2</button>
-        <button onclick="updatePoints('Valentina', 4)">+4</button>
-        <button onclick="updatePoints('Valentina', 8)">+8</button>
-        <button onclick="updatePoints('Valentina', 16)">+16</button>
-        <button onclick="updatePoints('Valentina', 32)">+32</button>
-        <button onclick="updatePoints('Valentina', 64)">+64</button>
-        <button onclick="updatePoints('Valentina', 128)">+128</button>
-
-        <!-- Minuspunkte -->
-        <h3>Minuspunkte an Valentina vergeben:</h3>
-        <button onclick="updatePoints('Valentina', -1)">-1</button>
-        <button onclick="updatePoints('Valentina', -2)">-2</button>
-        <button onclick="updatePoints('Valentina', -4)">-4</button>
-        <button onclick="updatePoints('Valentina', -8)">-8</button>
-        <button onclick="updatePoints('Valentina', -16)">-16</button>
-        <button onclick="updatePoints('Valentina', -32)">-32</button>
-        <button onclick="updatePoints('Valentina', -64)">-64</button>
-        <button onclick="updatePoints('Valentina', -128)">-128</button>
-    </div>
-
     <a href="index.html">Zurück zur Auswahl</a>
 </body>
 </html>
