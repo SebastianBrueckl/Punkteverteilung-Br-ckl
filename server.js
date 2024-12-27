@@ -1,36 +1,36 @@
 const express = require('express');
 const cors = require('cors');
-
 const app = express();
-app.use(cors());
-app.use(express.json()); // Für JSON-Daten im Body
+const port = 3000;
 
-// Punktestände speichern
+// Punktestand im Speicher
 let points = {
     Sebastian: 0,
-    Valentina: 0,
+    Valentina: 0
 };
 
-// Punktestände abrufen
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Punktestand abrufen
 app.get('/points', (req, res) => {
     res.json(points);
 });
 
-// Punkte aktualisieren (nur Nelly und Hans)
+// Punktestand aktualisieren
 app.post('/update-points', (req, res) => {
     const { user, value } = req.body;
 
     if (points[user] !== undefined) {
         points[user] += value;
-        if (points[user] < 0) points[user] = 0; // Negative Punkte verhindern
         res.json({ success: true, points });
     } else {
-        res.status(400).json({ success: false, message: 'Ungültiger Nutzer' });
+        res.status(400).json({ success: false, message: 'Ungültiger Benutzer' });
     }
 });
 
 // Server starten
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server läuft auf http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Server läuft auf http://localhost:${port}`);
 });
