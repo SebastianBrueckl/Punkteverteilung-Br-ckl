@@ -1,45 +1,57 @@
-// Punktestand für Benutzer wird im localStorage gespeichert
+// Punktestand im LocalStorage initialisieren
+const users = ['Sebastian', 'Valentina'];
+
+// Punkte initialisieren
 const points = {
     Sebastian: parseInt(localStorage.getItem('Sebastian')) || 0,
     Valentina: parseInt(localStorage.getItem('Valentina')) || 0
 };
 
+// Helper: Speichern und Synchronisieren von Punkten
+function saveAndSyncPoints() {
+    users.forEach(user => {
+        localStorage.setItem(user, points[user]);
+    });
+    updateBars();
+}
+
 // Punkte hinzufügen
 function addPoints(user, value) {
+    if (!points[user]) return; // Sicherstellen, dass der Nutzer existiert
     points[user] += value;
-    localStorage.setItem(user, points[user]); // Speichern im localStorage
-    updateBars();
+    saveAndSyncPoints();
 }
 
 // Punkte subtrahieren
 function subtractPoints(user, value) {
-    points[user] -= value;
-    localStorage.setItem(user, points[user]); // Speichern im localStorage
-    updateBars();
+    if (!points[user]) return; // Sicherstellen, dass der Nutzer existiert
+    points[user] = Math.max(0, points[user] - value); // Negative Punkte verhindern
+    saveAndSyncPoints();
 }
 
 // Balken aktualisieren
 function updateBars() {
     const maxBarHeight = 300; // Maximale Höhe der Balken in Pixeln
 
-    // Sebastian aktualisieren (falls vorhanden)
-    const sebastianBar = document.getElementById('SebastianPoints');
-    const sebastianScore = document.getElementById('SebastianScore');
-    if (sebastianBar && sebastianScore) {
-        const sebastianHeight = Math.min(points.Sebastian, maxBarHeight);
-        sebastianBar.style.height = sebastianHeight + 'px';
-        sebastianScore.innerText = points.Sebastian + ' Punkte';
-    }
-
-    // Valentina aktualisieren (falls vorhanden)
-    const valentinaBar = document.getElementById('ValentinaPoints');
-    const valentinaScore = document.getElementById('ValentinaScore');
-    if (valentinaBar && valentinaScore) {
-        const valentinaHeight = Math.min(points.Valentina, maxBarHeight);
-        valentinaBar.style.height = valentinaHeight + 'px';
-        valentinaScore.innerText = points.Valentina + ' Punkte';
-    }
+    users.forEach(user => {
+        const bar = document.getElementById(`${user}Points`);
+        const score = document.getElementById(`${user}Score`);
+        if (bar && score) {
+            const height = Math.min(points[user], maxBarHeight);
+            bar.style.height = height + 'px';
+            score.innerText = `${points[user]} Punkte`;
+        }
+    });
 }
 
 // Beim Laden der Seite die Balken aktualisieren
 document.addEventListener('DOMContentLoaded', updateBars);
+
+// Debug- und Synchronisation-Button (optional für Tests)
+function resetPoints() {
+    users.forEach(user => {
+        points[user] = 0;
+        localStorage.removeItem(user);
+    });
+    updateBars();
+}
