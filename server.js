@@ -1,36 +1,50 @@
 const express = require('express');
 const cors = require('cors');
-const app = express();
-const port = 3000;
+const path = require('path');
 
-// Punktestand im Speicher
-let points = {
-    Sebastian: 0,
-    Valentina: 0
-};
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Punktestand abrufen
-app.get('/points', (req, res) => {
-    res.json(points);
+// Daten für Punkte
+let punkte = {
+    Sebastian: 0,
+    Valentina: 0,
+};
+
+// API-Endpunkte
+// Punkte abfragen
+app.get('/api/punkte', (req, res) => {
+    res.json(punkte);
 });
 
-// Punktestand aktualisieren
-app.post('/update-points', (req, res) => {
-    const { user, value } = req.body;
+// Punkte vergeben
+app.post('/api/punkte/:name', (req, res) => {
+    const { name } = req.params;
+    const { punkteWert } = req.body;
 
-    if (points[user] !== undefined) {
-        points[user] += value;
-        res.json({ success: true, points });
-    } else {
-        res.status(400).json({ success: false, message: 'Ungültiger Benutzer' });
+    if (!punkte[name]) {
+        return res.status(404).json({ error: 'Name nicht gefunden' });
     }
+
+    if (typeof punkteWert !== 'number') {
+        return res.status(400).json({ error: 'Ungültiger Punktewert' });
+    }
+
+    punkte[name] += punkteWert;
+    res.json({ name, neuePunkte: punkte[name] });
+});
+
+// Startseite (optional)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Server starten
-app.listen(port, () => {
-    console.log(`Server läuft auf http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server läuft auf http://localhost:${PORT}`);
 });
