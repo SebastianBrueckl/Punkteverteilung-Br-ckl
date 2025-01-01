@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sebastian</title>
-    <script src="points.js" defer></script>
+    <title>Sebastian Punkte</title>
+    <script src="/Sebastian.js" defer></script>
 </head>
 <body>
-    <h1>Willkommen Sebastian!</h1>
-    <div style="display: flex; align-items: flex-end; height: 300px;">
-        <div>
-            <div id="SebastianPoints" style="width: 50px; background: blue; height: 0;"></div>
-            <p id="SebastianScore">0 Punkte</p>
-        </div>
+    <h1>Hallo, Sebastian!</h1>
+    <p>Du kannst keine Punkte vergeben, aber du kannst deine Punkte ansehen:</p>
+    <div>
+        <h2>Deine Punkte: <span id="sebastian-points">0</span></h2>
     </div>
-    <a href="index.html">Zurück zur Auswahl</a>
 </body>
-<script>
-    document.querySelectorAll('button').forEach(button => button.style.display = 'none');
-</script>
 </html>
