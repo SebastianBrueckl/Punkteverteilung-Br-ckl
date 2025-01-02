@@ -67,3 +67,21 @@ app.post('/api/user/:name/points', (req, res) => {
 app.listen(port, () => {
   console.log(`Server läuft auf Port ${port}`);
 });
+
+const express = require('express');
+const app = express();
+const path = require('path');
+
+// Damit Express statische Dateien (wie HTML, CSS, JS) im "public"-Ordner servieren kann
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Route für die Startseite
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Server starten
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => {
+  console.log(`Server läuft auf http://localhost:${PORT}`);
+});
