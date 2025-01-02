@@ -1,53 +1,87 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punkteverteilung</title>
-    <script>
-        async function getPoints() {
-            const response = await fetch('/api/punkte');
-            const data = await response.json();
-            document.getElementById('points').innerHTML = JSON.stringify(data, null, 2);
+    <title>Punkteverteilung - Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
         }
+        .form-container {
+            display: inline-block;
+            text-align: left;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-container input {
+            display: block;
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+        }
+        .form-container button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Punkteverteilung - Login</h1>
+    <div class="form-container">
+        <form id="loginForm">
+            <label for="username">Benutzer:</label>
+            <select id="username" required>
+                <option value="">-- Wähle einen Benutzer --</option>
+                <option value="Sebastian">Sebastian</option>
+                <option value="Valentina">Valentina</option>
+                <option value="Nelly">Nelly</option>
+                <option value="Hans">Hans</option>
+            </select>
 
-        async function addPoints() {
-            const name = document.getElementById('name').value;
-            const points = parseInt(document.getElementById('punkte').value, 10);
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" placeholder="Gib dein Passwort ein" required>
 
-            if (isNaN(points) || points <= 0) {
-                alert('Bitte gib einen gültigen Punktwert ein.');
+            <button type="button" onclick="login()">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                alert("Bitte Benutzer und Passwort eingeben!");
                 return;
             }
 
-            const response = await fetch(`/api/punkte/${name}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ punkteWert: points }),
-            });
-
-            const result = await response.json();
-            alert(`${name} hat jetzt ${result[name]} Punkte.`);
-            getPoints(); // Punkte nach dem Hinzufügen aktualisieren
+            // Leitet den Benutzer basierend auf dem Namen weiter
+            if (username === "Sebastian" && password === "1234") {
+                window.location.href = "Sebastian.html";
+            } else if (username === "Valentina" && password === "5678") {
+                window.location.href = "Valentina.html";
+            } else if (username === "Nelly" && password === "abcd") {
+                window.location.href = "Nelly.html";
+            } else if (username === "Hans" && password === "efgh") {
+                window.location.href = "Johann.html";
+            } else {
+                alert("Falscher Benutzername oder Passwort!");
+            }
         }
     </script>
-</head>
-<body>
-    <h1>Punkteverteilung</h1>
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" placeholder="Sebastian oder Valentina" />
-    </div>
-    <div>
-        <label for="punkte">Punkte:</label>
-        <input type="number" id="punkte" placeholder="Punkte hinzufügen" />
-    </div>
-    <button onclick="addPoints()">Punkte hinzufügen</button>
-    <hr>
-    <h2>Aktuelle Punkte:</h2>
-    <pre id="points">Lade Punkte...</pre>
-    <button onclick="getPoints()">Punkte anzeigen</button>
 </body>
 </html>
