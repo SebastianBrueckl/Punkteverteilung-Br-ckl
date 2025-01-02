@@ -1,46 +1,43 @@
-const express = require("express");
-const cors = require("cors");
-const http = require("http");
-const { Server } = require("socket.io");
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
-
 app.use(cors());
-app.use(express.json());
-app.use(express.static("public"));
+app.use(bodyParser.json());
+app.use(express.static('public'));
 
-const points = {
-  Sebastian: 0,
-  Valentina: 0,
-  Nelly: 0,
-  Hans: 0,
+let points = {
+    Sebastian: 0,
+    Valentina: 0,
+    Nelly: 0,
+    Hans: 0
 };
 
-app.get("/points", (req, res) => {
-  res.json(points);
+// API: Punkte abfragen
+app.get('/points', (req, res) => {
+    res.json(points);
 });
 
-app.post("/points", (req, res) => {
-  const { from, to, pointsGiven } = req.body;
-  if (!points[to]) {
-    return res.status(400).json({ error: "Benutzer nicht gefunden" });
-  }
-  points[to] += pointsGiven;
-  io.emit("pointsUpdated", points);
-  res.json({ message: "Punkte aktualisiert", points });
+// API: Punkte vergeben
+app.post('/points', (req, res) => {
+    const { giver, receiver, amount } = req.body;
+
+    if (!points.hasOwnProperty(receiver)) {
+        return res.status(400).json({ error: 'Invalid receiver' });
+    }
+
+    if (!points.hasOwnProperty(giver)) {
+        return res.status(400).json({ error: 'Invalid giver' });
+    }
+
+    // Punkte hinzufügen
+    points[receiver] += amount;
+    res.json({ success: true, points });
 });
 
-io.on("connection", (socket) => {
-  console.log("Ein Benutzer hat sich verbunden");
-  socket.emit("pointsUpdated", points);
-  socket.on("disconnect", () => {
-    console.log("Ein Benutzer hat die Verbindung getrennt");
-  });
-});
-
+// Server starten
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Server läuft auf Port ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nelly - Punkteverteilung</title>
-    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="Nelly.js" defer></script>
 </head>
 <body>
-    <h1>Nelly - Punkteverteilung</h1>
-    <div id="pointsDisplay">Lade Punkte...</div>
-    <div>
-        <h2>Punkte vergeben</h2>
-        <label for="to">Punkte an:</label>
-        <select id="to">
+    <h1>Willkommen, Nelly!</h1>
+    <h2>Aktueller Punktestand: <span id="points">0</span></h2>
+
+    <h3>Punkte vergeben:</h3>
+    <form id="give-points-form">
+        <label for="receiver">Empfänger:</label>
+        <select id="receiver" required>
             <option value="Sebastian">Sebastian</option>
             <option value="Valentina">Valentina</option>
         </select>
-        <label for="points">Punkte:</label>
-        <input type="number" id="points" min="1" value="1">
-        <button onclick="givePoints()">Punkte vergeben</button>
-    </div>
+        <label for="amount">Anzahl der Punkte:</label>
+        <input type="number" id="amount" min="1" required>
+        <button type="submit">Punkte vergeben</button>
+    </form>
 </body>
 </html>

@@ -1,32 +1,44 @@
-const pointsDisplay = document.getElementById("pointsDisplay");
-const socket = io();
+const pointsDisplay = document.getElementById('points');
+const form = document.getElementById('give-points-form');
 
-// Punkte in Echtzeit aktualisieren
-socket.on("pointsUpdated", (points) => {
-  pointsDisplay.textContent = `Sebastian: ${points.Sebastian}, Valentina: ${points.Valentina}, Nelly: ${points.Nelly}, Hans: ${points.Hans}`;
-});
-
-// Punkte vergeben
-function givePoints() {
-  const to = document.getElementById("to").value;
-  const points = parseInt(document.getElementById("points").value, 10);
-
-  fetch("/points", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: "Nelly",
-      to,
-      pointsGiven: points,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Punkte erfolgreich vergeben:", data);
-    })
-    .catch((error) => {
-      console.error("Fehler beim Punkte vergeben:", error);
-    });
+async function fetchPoints() {
+    try {
+        const response = await fetch('/points');
+        const data = await response.json();
+        pointsDisplay.textContent = data.Nelly;
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Punkte:', error);
+    }
 }
+
+async function givePoints(event) {
+    event.preventDefault();
+
+    const receiver = document.getElementById('receiver').value;
+    const amount = parseInt(document.getElementById('amount').value, 10);
+
+    try {
+        const response = await fetch('/points', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ giver: 'Nelly', receiver, amount }),
+        });
+
+        if (response.ok) {
+            alert('Punkte erfolgreich vergeben!');
+            fetchPoints(); // Aktualisiere Punktestand
+        } else {
+            const errorData = await response.json();
+            alert(`Fehler: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Fehler beim Vergabe von Punkten:', error);
+    }
+}
+
+// Event-Listener für das Formular
+form.addEventListener('submit', givePoints);
+
+// Punkte regelmäßig abrufen
+fetchPoints();
+setInterval(fetchPoints, 5000); // Alle 5 Sekunden

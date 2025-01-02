@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nelly Punkte</title>
-    <script src="/Nelly.js" defer></script>
+    <title>Johann - Punkteverteilung</title>
+    <script src="Johann.js" defer></script>
 </head>
 <body>
-    <h1>Hallo, Nelly!</h1>
-    <p>Du kannst Punkte an Valentina und Sebastian vergeben:</p>
-    <div>
-        <button onclick="givePoints('Sebastian', 1)">1 Punkt an Sebastian</button>
-        <button onclick="givePoints('Sebastian', 2)">2 Punkte an Sebastian</button>
-        <button onclick="givePoints('Valentina', 1)">1 Punkt an Valentina</button>
-        <button onclick="givePoints('Valentina', 2)">2 Punkte an Valentina</button>
-    </div>
+    <h1>Willkommen, Johann!</h1>
+    <h2>Aktueller Punktestand: <span id="points">0</span></h2>
+
+    <h3>Punkte vergeben:</h3>
+    <form id="give-points-form">
+        <label for="receiver">Empfänger:</label>
+        <select id="receiver" required>
+            <option value="Sebastian">Sebastian</option>
+            <option value="Valentina">Valentina</option>
+            <option value="Nelly">Nelly</option>
+        </select>
+        <label for="amount">Anzahl der Punkte:</label>
+        <input type="number" id="amount" min="1" required>
+        <button type="submit">Punkte vergeben</button>
+    </form>
 </body>
 </html>

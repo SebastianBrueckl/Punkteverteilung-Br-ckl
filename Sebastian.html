@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sebastian Punkte</title>
-    <script src="/Sebastian.js" defer></script>
+    <title>Sebastian - Punkteverteilung</title>
+    <script src="Sebastian.js" defer></script>
 </head>
 <body>
-    <h1>Hallo, Sebastian!</h1>
-    <p>Du kannst keine Punkte vergeben, aber du kannst deine Punkte ansehen:</p>
-    <div>
-        <h2>Deine Punkte: <span id="sebastian-points">0</span></h2>
-    </div>
+    <h1>Willkommen, Sebastian!</h1>
+    <h2>Aktueller Punktestand: <span id="points">0</span></h2>
+
+    <h3>Punkte vergeben:</h3>
+    <form id="give-points-form">
+        <label for="receiver">Empfänger:</label>
+        <select id="receiver" required>
+            <option value="Nelly">Nelly</option>
+            <option value="Hans">Hans</option>
+        </select>
+        <label for="amount">Anzahl der Punkte:</label>
+        <input type="number" id="amount" min="1" required>
+        <button type="submit">Punkte vergeben</button>
+    </form>
 </body>
 </html>
