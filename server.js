@@ -1,32 +1,53 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
+const http = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const server = http.createServer(app);
+const io = new Server(server);
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-let points = {
-    Sebastian: 0,
-    Valentina: 0
+// In-Memory-Datenstruktur für Punkte
+const points = {
+  Sebastian: 0,
+  Valentina: 0,
+  Nelly: 0,
+  Hans: 0,
 };
 
-app.get('/api/points', (req, res) => {
-    res.json(points);
+// API-Endpunkte
+app.get("/points", (req, res) => {
+  res.json(points);
 });
 
-app.post('/api/points', (req, res) => {
-    const { name, points: newPoints } = req.body;
-    if (points[name] !== undefined) {
-        points[name] += newPoints;
-        res.status(200).json({ message: 'Punkte erfolgreich aktualisiert!' });
-    } else {
-        res.status(400).json({ error: 'Ungültiger Benutzername' });
-    }
+app.post("/points", (req, res) => {
+  const { from, to, pointsGiven } = req.body;
+  if (!points[to]) {
+    return res.status(400).json({ error: "Benutzer nicht gefunden" });
+  }
+  points[to] += pointsGiven;
+
+  // Informiere alle Clients über die Punkteänderung
+  io.emit("pointsUpdated", points);
+
+  res.json({ message: "Punkte aktualisiert", points });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server läuft auf http://localhost:${PORT}`);
+// WebSocket-Logik
+io.on("connection", (socket) => {
+  console.log("Ein Benutzer hat sich verbunden");
+  socket.emit("pointsUpdated", points);
+
+  socket.on("disconnect", () => {
+    console.log("Ein Benutzer hat die Verbindung getrennt");
+  });
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server läuft auf Port ${PORT}`);
 });

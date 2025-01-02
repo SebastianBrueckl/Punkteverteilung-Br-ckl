@@ -70,14 +70,15 @@
             }
 
             // Leitet den Benutzer basierend auf dem Namen weiter
-            if (username === "Sebastian" && password === "pass1") {
-                window.location.href = "Sebastian.html";
-            } else if (username === "Valentina" && password === "pass2") {
-                window.location.href = "Valentina.html";
-            } else if (username === "Nelly" && password === "pass3") {
-                window.location.href = "Nelly.html";
-            } else if (username === "Hans" && password === "pass4") {
-                window.location.href = "Johann.html";
+            const passwords = {
+                Sebastian: "1234",
+                Valentina: "5678",
+                Nelly: "abcd",
+                Hans: "efgh"
+            };
+
+            if (passwords[username] === password) {
+                window.location.href = username + ".html";
             } else {
                 alert("Falscher Benutzername oder Passwort!");
             }
