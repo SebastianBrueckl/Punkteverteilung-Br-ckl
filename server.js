@@ -1,43 +1,69 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-app.use(express.static('public'));
+const port = process.env.PORT || 5000;
 
-let points = {
-    Sebastian: 0,
-    Valentina: 0,
-    Nelly: 0,
-    Hans: 0
+// CORS-Konfiguration für den Zugriff von verschiedenen Geräten
+app.use(cors());
+app.use(express.json());
+
+// Benutzer und Punkte in-memory speichern
+let users = {
+  "Nelly": { points: 0 },
+  "Johann": { points: 0 },
+  "Sebastian": { points: 0 },
+  "Valentina": { points: 0 }
 };
 
-// API: Punkte abfragen
-app.get('/points', (req, res) => {
-    res.json(points);
+// Endpunkt: Alle Benutzer anzeigen (optional, zum Testen)
+app.get('/api/users', (req, res) => {
+  res.json(users);
 });
 
-// API: Punkte vergeben
-app.post('/points', (req, res) => {
-    const { giver, receiver, amount } = req.body;
+// Endpunkt: Punkte eines Benutzers abrufen
+app.get('/api/user/:name', (req, res) => {
+  const userName = req.params.name;
+  if (users[userName]) {
+    res.json({ name: userName, points: users[userName].points });
+  } else {
+    res.status(404).send('Benutzer nicht gefunden');
+  }
+});
 
-    if (!points.hasOwnProperty(receiver)) {
-        return res.status(400).json({ error: 'Invalid receiver' });
+// Endpunkt: Punkte vergeben (Nelly und Johann können Punkte vergeben)
+app.post('/api/user/:name/points', (req, res) => {
+  const userName = req.params.name;
+  const { points } = req.body;
+
+  if (!users[userName]) {
+    return res.status(404).send('Benutzer nicht gefunden');
+  }
+
+  // Nur Nelly und Johann können Punkte vergeben
+  if (userName !== "Nelly" && userName !== "Johann") {
+    return res.status(403).send('Dieser Benutzer kann keine Punkte vergeben');
+  }
+
+  if (isNaN(points) || points <= 0) {
+    return res.status(400).send('Ungültige Punktzahl');
+  }
+
+  // Die Punkte zum entsprechenden Benutzer hinzufügen
+  if (users[userName]) {
+    // Ziel-Benutzer
+    const targetUser = req.body.target;
+    if (users[targetUser]) {
+      users[targetUser].points += points;
+      res.json({ message: `${points} Punkte an ${targetUser} vergeben`, points: users[targetUser].points });
+    } else {
+      res.status(404).send('Zielbenutzer nicht gefunden');
     }
-
-    if (!points.hasOwnProperty(giver)) {
-        return res.status(400).json({ error: 'Invalid giver' });
-    }
-
-    // Punkte hinzufügen
-    points[receiver] += amount;
-    res.json({ success: true, points });
+  } else {
+    res.status(404).send('Benutzer nicht gefunden');
+  }
 });
 
 // Server starten
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server läuft auf Port ${port}`);
 });

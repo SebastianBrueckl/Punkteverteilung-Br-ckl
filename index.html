@@ -1,88 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punkteverteilung - Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        .form-container {
-            display: inline-block;
-            text-align: left;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .form-container input {
-            display: block;
-            margin: 10px 0;
-            padding: 8px;
-            width: 100%;
-        }
-        .form-container button {
-            margin-top: 10px;
-            padding: 10px;
-            width: 100%;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .form-container button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Login</title>
 </head>
 <body>
-    <h1>Punkteverteilung - Login</h1>
-    <div class="form-container">
-        <form id="loginForm">
-            <label for="username">Benutzer:</label>
-            <select id="username" required>
-                <option value="">-- Wähle einen Benutzer --</option>
-                <option value="Sebastian">Sebastian</option>
-                <option value="Valentina">Valentina</option>
-                <option value="Nelly">Nelly</option>
-                <option value="Hans">Hans</option>
-            </select>
+    <h1>Benutzer auswählen</h1>
+    <form id="login-form">
+        <label for="user">Benutzer:</label>
+        <select id="user" name="user">
+            <option value="Nelly">Nelly</option>
+            <option value="Johann">Johann</option>
+            <option value="Sebastian">Sebastian</option>
+            <option value="Valentina">Valentina</option>
+        </select>
 
-            <label for="password">Passwort:</label>
-            <input type="password" id="password" placeholder="Gib dein Passwort ein" required>
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" required>
 
-            <button type="button" onclick="login()">Login</button>
-        </form>
-    </div>
+        <button type="submit">Einloggen</button>
+    </form>
 
     <script>
-        function login() {
-            const username = document.getElementById('username').value;
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const user = document.getElementById('user').value;
             const password = document.getElementById('password').value;
 
-            if (!username || !password) {
-                alert("Bitte Benutzer und Passwort eingeben!");
-                return;
-            }
-
-            // Leitet den Benutzer basierend auf dem Namen weiter
-            const passwords = {
-                Sebastian: "1234",
-                Valentina: "5678",
-                Nelly: "abcd",
-                Hans: "efgh"
-            };
-
-            if (passwords[username] === password) {
-                window.location.href = username + ".html";
+            // Simple user/password check (no security, just demo purposes)
+            if (user === "Nelly" || user === "Johann") {
+                window.location.href = `${user}.html`;  // Redirect to user-specific page
+            } else if (user === "Sebastian" || user === "Valentina") {
+                window.location.href = `${user}.html`;  // Redirect to points viewing page
             } else {
-                alert("Falscher Benutzername oder Passwort!");
+                alert("Falscher Benutzer oder Passwort!");
             }
-        }
+        });
     </script>
 </body>
 </html>

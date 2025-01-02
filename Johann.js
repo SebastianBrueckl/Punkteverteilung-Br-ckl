@@ -1,44 +1,28 @@
-const pointsDisplay = document.getElementById('points');
-const form = document.getElementById('give-points-form');
-
-async function fetchPoints() {
-    try {
-        const response = await fetch('/points');
-        const data = await response.json();
-        pointsDisplay.textContent = data.Johann;
-    } catch (error) {
-        console.error('Fehler beim Abrufen der Punkte:', error);
+// Johann.js
+document.getElementById('submit').addEventListener('click', function() {
+    const target = document.getElementById('target').value; // Ziel (Sebastian oder Valentina)
+    const points = parseInt(document.getElementById('points').value); // Punkte
+  
+    // Validierung der Eingaben
+    if (!target || !points || isNaN(points) || points <= 0) {
+      alert('Bitte gültige Zielperson und Punktzahl eingeben!');
+      return;
     }
-}
-
-async function givePoints(event) {
-    event.preventDefault();
-
-    const receiver = document.getElementById('receiver').value;
-    const amount = parseInt(document.getElementById('amount').value, 10);
-
-    try {
-        const response = await fetch('/points', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ giver: 'Johann', receiver, amount }),
-        });
-
-        if (response.ok) {
-            alert('Punkte erfolgreich vergeben!');
-            fetchPoints(); // Aktualisiere Punktestand
-        } else {
-            const errorData = await response.json();
-            alert(`Fehler: ${errorData.error}`);
-        }
-    } catch (error) {
-        console.error('Fehler beim Vergabe von Punkten:', error);
-    }
-}
-
-// Event-Listener für das Formular
-form.addEventListener('submit', givePoints);
-
-// Punkte regelmäßig abrufen
-fetchPoints();
-setInterval(fetchPoints, 5000); // Alle 5 Sekunden
+  
+    // POST-Anfrage an den Server, um Punkte zu vergeben
+    fetch(`/api/user/Johann/points`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ target: target, points: points }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.message); // Bestätigung der Punktvergabe
+    })
+    .catch(error => {
+      console.error('Fehler:', error);
+    });
+  });
+  
