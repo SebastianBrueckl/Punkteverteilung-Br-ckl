@@ -1,7 +1,7 @@
-async function fetchPoints() {
-    const response = await fetch('/api/points');
-    const data = await response.json();
-    document.getElementById('valentina-points').textContent = data.Valentina;
-}
+const pointsDisplay = document.getElementById("pointsDisplay");
+const socket = io();
 
-fetchPoints();
+// Punkte in Echtzeit aktualisieren
+socket.on("pointsUpdated", (points) => {
+  pointsDisplay.textContent = `Sebastian: ${points.Sebastian}, Valentina: ${points.Valentina}, Nelly: ${points.Nelly}, Hans: ${points.Hans}`;
+});
